@@ -1,0 +1,29 @@
+version: "3.4"
+
+services:
+  ib-gateway:
+    restart: always
+    build:
+      context: ./stable
+      tags:
+        - "ghcr.io/gnzsnz/ib-gateway:stable"
+    image: ghcr.io/gnzsnz/ib-gateway:stable
+    environment:
+      TWS_USERID: ${TWS_USERID}
+      TWS_PASSWORD: ${TWS_PASSWORD}
+      TRADING_MODE: ${TRADING_MODE:-paper}
+      READ_ONLY_API: ${READ_ONLY_API:-}
+      VNC_SERVER_PASSWORD: ${VNC_SERVER_PASSWORD:-}
+      TWOFA_TIMEOUT_ACTION: ${TWOFA_TIMEOUT_ACTION:-exit}
+      AUTO_RESTART_TIME: ${AUTO_RESTART_TIME:-}
+      RELOGIN_AFTER_TWOFA_TIMEOUT: ${RELOGIN_AFTER_TWOFA_TIMEOUT:-no}
+      TWOFA_EXIT_INTERVAL: ${TWOFA_EXIT_INTERVAL:-60}
+      TIME_ZONE: ${TIME_ZONE:-Etc/UTC}
+      CUSTOM_CONFIG: ${CUSTOM_CONFIG:-NO}
+#    volumes:
+#      - ${PWD}/jts.ini:/root/Jts/jts.ini
+#      - ${PWD}/config.ini:/root/ibc/config.ini
+    ports:
+      - "127.0.0.1:4001:4001"
+      - "127.0.0.1:4002:4002"
+      - "127.0.0.1:5900:5900"
